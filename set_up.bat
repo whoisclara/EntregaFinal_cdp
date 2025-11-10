@@ -5,10 +5,10 @@ echo === Python Virtual Environment Setup ===
 echo.
 
 REM Paso 1: Definir el nombre del proyecto
-set "project_code=mlops_pipeline"
+set "project_code=EntregaFinal_cdp"
 
 REM Paso 2: Navegar al folder src del pipeline
-pushd "%~dp0mlops_pipeline\src" || (
+pushd "%~dp0src" || (
     echo ERROR: No se encontró la carpeta "%~dp0mlops_pipeline\src"
     echo Verifica la ruta o el nombre de carpeta.
     exit /b 1
