@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Membresía Premium</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f5f7fb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        input, select {
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            width: 100%;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🔮 Predicción de Membresía Premium</h2>
+        <form action="/predict_form" method="post">
+            <label>Edad:</label>
+            <input type="number" name="edad" min="18" max="100" step="1" required>
+
+            <label>Frecuencia de visita (por mes):</label>
+            <input type="number" name="frecuencia_visita" step="1" required>
+
+            <label>Promedio de gasto en comida ($):</label>
+            <input type="number" name="promedio_gasto_comida" step="0.01" required>
+
+            <label>Ingresos mensuales ($):</label>
+            <input type="number" name="ingresos_mensuales" step="0.01" required>
+
+            <label>Género:</label>
+            <select name="genero" required>
+                <option value="">Seleccione...</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+            </select>
+
+            <label>Ciudad de residencia:</label>
+            <select name="ciudad_residencia" required>
+                <option value="">Seleccione...</option>
+                <option>Boston</option>
+                <option>Chicago</option>
+                <option>Dallas</option>
+                <option>Denver</option>
+                <option>Houston</option>
+                <option>Miami</option>
+                <option>NYC</option>
+                <option>Phoenix</option>
+                <option>San Diego</option>
+                <option>Seattle</option>
+            </select>
+
+            <label>Consume licor:</label>
+            <select name="consume_licor" required>
+                <option value="">Seleccione...</option>
+                <option value="Sí">Sí</option>
+                <option value="No">No</option>
+            </select>
+
+            <label>Tipo de pago más usado:</label>
+            <select name="tipo_de_pago_mas_usado" required>
+                <option value="">Seleccione...</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Transferencia">Transferencia</option>
+            </select>
+
+            <label>Estrato socioeconómico:</label>
+            <select name="estrato_socioeconomico" required>
+                <option value="">Seleccione...</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+
+            <label>Preferencias alimenticias:</label>
+            <select name="preferencias_alimenticias" required>
+                <option value="">Seleccione...</option>
+                <option value="Carnes">Carnes</option>
+                <option value="Vegetariano">Vegetariano</option>
+                <option value="Vegano">Vegano</option>
+                <option value="Mariscos">Mariscos</option>
+                <option value="Postres">Postres</option>
+            </select>
+
+            <label>Ocio o entretenimiento favorito:</label>
+            <select name="ocio" required>
+                <option value="">Seleccione...</option>
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+            </select>
+
+            <button type="submit">Predecir Membresía</button>
+        </form>
+    </div>
+</body>
+</html>
