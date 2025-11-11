@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado de la Predicción</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f5f7fb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 650px;
+            margin: 60px auto;
+            background: white;
+            padding: 35px 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        strong {
+            color: #222;
+        }
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #5a2dff;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📊 Resultado de la Predicción</h2>
+
+        {% if result %}
+            <p><strong>Predicción:</strong> {{ result.prediction }}</p>
+            <p><strong>Probabilidad:</strong> {{ result.probability }}</p>
+        {% else %}
+            <p>No se ha realizado ninguna predicción.</p>
+        {% endif %}
+
+        <a href="/">🔙 Volver al formulario</a>
+    </div>
+</body>
+</html>
