@@ -1,0 +1,123 @@
+/* =======================================
+   ESTILOS GLOBALES
+======================================= */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f5f7fb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #222;
+}
+
+/* =======================================
+   CONTENEDOR PRINCIPAL
+======================================= */
+.container {
+    max-width: 650px;
+    margin: 60px auto;
+    background: white;
+    padding: 35px 40px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* =======================================
+   FORMULARIO
+======================================= */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+input, select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #5a2dff;
+    box-shadow: 0 0 4px rgba(90,45,255,0.3);
+}
+
+/* =======================================
+   BOTONES
+======================================= */
+button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #5a2dff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #4720d8;
+}
+
+/* =======================================
+   RESULTADOS
+======================================= */
+.result-text {
+    font-size: 18px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.success {
+    color: #28a745;
+}
+
+.error {
+    color: #d9534f;
+}
+
+/* =======================================
+   ENLACES
+======================================= */
+a {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+    color: #5a2dff;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* =======================================
+   RESPONSIVE
+======================================= */
+@media (max-width: 600px) {
+    .container {
+        margin: 20px;
+        padding: 25px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 9px;
+    }
+}
