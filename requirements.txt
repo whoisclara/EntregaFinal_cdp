@@ -9,3 +9,6 @@ fastapi
 uvicorn
 google-cloud-bigquery
 db-dtypes
+python-multipart
+jinja2 
+xgboost 
