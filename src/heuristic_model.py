@@ -21,21 +21,25 @@ import matplotlib.pyplot as plt
 # =====================================================
 # 1️⃣ Conexión a BigQuery
 # =====================================================
-load_dotenv()  # cargar variables del entorno
+# ======================================================
+# AUTENTICACIÓN Y CONFIGURACIÓN DE BIGQUERY
+# ======================================================
+
+load_dotenv()
+
+# Ruta absoluta al archivo de credenciales
+CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), "..", ".keys", "service_account.json")
+
+if not os.path.exists(CREDENTIALS_PATH):
+    raise FileNotFoundError(f"❌ No se encontró el archivo de credenciales en {CREDENTIALS_PATH}")
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = CREDENTIALS_PATH
 
 PROJECT_ID = os.getenv("PROJECT_ID")
 DATASET = os.getenv("DATASET")
+
 bq_client = bigquery.Client(project=PROJECT_ID)
 
-
-def load_table_from_bigquery(table_name: str) -> pd.DataFrame:
-    """
-    Carga una tabla de BigQuery y la retorna como DataFrame de pandas.
-    """
-    query = f"SELECT * FROM `{PROJECT_ID}.{DATASET}.{table_name}`"
-    df = bq_client.query(query).to_dataframe()
-    print(f"✅ Cargada tabla desde BigQuery: {table_name} ({df.shape[0]} filas, {df.shape[1]} columnas)")
-    return df
 
 
 # =====================================================
@@ -122,6 +126,13 @@ class HeuristicModel(BaseEstimator, ClassifierMixin):
         return np.array(preds)
 
 
+def load_table_from_bigquery(table_name: str) -> pd.DataFrame:
+    """Carga una tabla desde BigQuery en un DataFrame."""
+    query = f"SELECT * FROM `{PROJECT_ID}.{DATASET}.{table_name}`"
+    df = bq_client.query(query).to_dataframe()
+    print(f"✅ Cargada tabla desde BigQuery: {table_name} ({df.shape[0]} filas, {df.shape[1]} columnas)")
+    return df
+
 # =====================================================
 # 3️⃣ Cargar dataset desde BigQuery
 # =====================================================
@@ -130,7 +141,6 @@ test_df = load_table_from_bigquery("test_30_raw")
 
 X_train = train_df.drop(columns=["membresia_premium"])
 y_train = train_df["membresia_premium"]
-
 X_test = test_df.drop(columns=["membresia_premium"])
 y_test = test_df["membresia_premium"]
 

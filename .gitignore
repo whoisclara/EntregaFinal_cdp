@@ -5,3 +5,11 @@ EntregaFinal_cdp-venv/
 # Archivos de configuración privada
 .env
 
+#Modelos locales 
+models/
+
+#Clave APIs
+*.keys/ 
+
+# Jenkins
+pyops/jenkins_home 

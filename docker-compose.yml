@@ -1,0 +1,23 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      # Persistencia de Jenkins 
+      - "./pyops/jenkins_home:/var/jenkins_home"
+      # Conexión Docker interno
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Montar TODO el proyecto dentro del workspace de Jenkins
+      - "C:/Users/ADA IMARA/Desktop/Universidad/Septimo_v2_semestre/cdp/Final/EntregaFinal_cdp:/var/jenkins_home/workspace/EntregaFinal_cdp"
+      #Credenciales 
+      - "C:\\Users\\ADA IMARA\\Desktop\\Universidad\\Septimo_v2_semestre\\cdp\\FINAL\\EntregaFinal_cdp\\.keys:/var/jenkins_home/.keys"
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - GOOGLE_APPLICATION_CREDENTIALS=/var/jenkins_home/.keys/service_account.json
+
+
+
