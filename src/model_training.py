@@ -27,12 +27,28 @@ from xgboost import XGBClassifier
 # ======================================================
 # 1️⃣ CONFIGURACIÓN Y CARGA DE DATOS DESDE BIGQUERY
 # ======================================================
+# ======================================================
+# AUTENTICACIÓN Y CONFIGURACIÓN DE BIGQUERY
+# ======================================================
+
 load_dotenv()
+
+# Ruta absoluta al archivo de credenciales
+CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), "..", ".keys", "service_account.json")
+
+if not os.path.exists(CREDENTIALS_PATH):
+    raise FileNotFoundError(f"❌ No se encontró el archivo de credenciales en {CREDENTIALS_PATH}")
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = CREDENTIALS_PATH
+
 PROJECT_ID = os.getenv("PROJECT_ID")
 DATASET = os.getenv("DATASET")
+
 bq_client = bigquery.Client(project=PROJECT_ID)
 
+
 def load_from_bigquery(table_name: str) -> pd.DataFrame:
+    """Carga una tabla escalada desde BigQuery."""
     query = f"SELECT * FROM `{PROJECT_ID}.{DATASET}.{table_name}`"
     df = bq_client.query(query).to_dataframe()
     print(f"✅ {table_name} cargada ({df.shape[0]} filas, {df.shape[1]} columnas)")

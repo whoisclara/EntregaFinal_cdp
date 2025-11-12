@@ -1,19 +1,37 @@
-from sklearn.metrics import classification_report, roc_auc_score
-
-# Cargar modelo
 import joblib
-model = joblib.load("models/RandomForest.pkl")
+import os
 
-# Cargar datos reales desde BigQuery
+from sklearn.metrics import classification_report, roc_auc_score
 from google.cloud import bigquery
 from dotenv import load_dotenv
-import os
+
+# ==============
+# Cargar modelo entrenado 
+# ============== 
+
+model = joblib.load("models/RandomForest.pkl")
+
+# ======================================================
+# AUTENTICACIÓN Y CONFIGURACIÓN DE BIGQUERY
+# ======================================================
+
 load_dotenv()
 
-project_id = os.getenv("PROJECT_ID")
-dataset_id = os.getenv("DATASET")
-client = bigquery.Client(project=project_id)
-df_test = client.query(f"SELECT * FROM `{project_id}.{dataset_id}.test_30_scaled`").to_dataframe()
+# Ruta absoluta al archivo de credenciales
+CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), "..", ".keys", "service_account.json")
+
+if not os.path.exists(CREDENTIALS_PATH):
+    raise FileNotFoundError(f"❌ No se encontró el archivo de credenciales en {CREDENTIALS_PATH}")
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = CREDENTIALS_PATH
+
+PROJECT_ID = os.getenv("PROJECT_ID")
+DATASET = os.getenv("DATASET")
+
+bq_client = bigquery.Client(project=PROJECT_ID)
+
+query = f"SELECT * FROM `{PROJECT_ID}.{DATASET}.test_30_scaled`"
+df_test = bq_client.query(query).to_dataframe()
 
 X_test = df_test.drop(columns=["membresia_premium"])
 y_true = df_test["membresia_premium"]

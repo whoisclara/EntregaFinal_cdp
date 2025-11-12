@@ -3,12 +3,10 @@
 # ================================================
 
 import sys
-sys.path.append("../src")  
-
 import pandas as pd
 import numpy as np
 import os
-
+import joblib
 
 from Carga_datos import load_data_from_bigquery
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, OrdinalEncoder
@@ -21,18 +19,29 @@ from google.cloud import bigquery
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Configuración de BigQuery
-load_dotenv()  # Leer variables del entorno (.env)
+# Ajustar ruta para importar módulos desde src/
+BASE_DIR = Path(__file__).resolve().parents[1]
+sys.path.append(str(BASE_DIR / "src"))
 
-project_id = os.getenv("PROJECT_ID")
-dataset = os.getenv("DATASET")
-bq_client = bigquery.Client(project=project_id)
 
 # ================================================
 # 2. Cargar los datos
 # ================================================
-df = load_data_from_bigquery()
-df.head()
+print("🚀 Iniciando Feature Engineering...")
+load_dotenv() #Leer variables del entorno (.env)
+
+# Cargar credenciales y cliente global
+project_id = os.getenv("PROJECT_ID")
+dataset = os.getenv("DATASET")
+bq_client = bigquery.Client(project=project_id)
+
+
+try:
+    df = load_data_from_bigquery()
+    print(f"✅ Datos cargados correctamente: {df.shape[0]} filas, {df.shape[1]} columnas")
+except Exception as e:
+    print(f"💥 Error al cargar los datos desde BigQuery: {e}")
+    raise SystemExit(1)
 
 def limpia_data(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -191,6 +200,12 @@ def main(target="membresia_premium"):
 
     print("✅ Feature Engineering completado y todos los datasets cargados correctamente.")
 
+    OUTPUT_DIR = Path(__file__).resolve().parents[1] / "models"
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Guardar el pipeline escalado (usado en entrenamiento y predicción)
+    joblib.dump(pipe_scaled, OUTPUT_DIR / "feature_pipeline.pkl")
+    print(f"💾 Pipeline escalado guardado en: {OUTPUT_DIR / 'feature_pipeline.pkl'}")
 
 if __name__ == "__main__":
     main()
